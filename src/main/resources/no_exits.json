@@ -1,0 +1,191 @@
+{
+  "adventure": {
+    "room": [
+      {
+        "id": 101,
+        "start": "true",
+        "name": "The forest center",
+        "short_description": "The center of the forest has trees for miles",
+        "long_description": "The center of the forest has thousands of trees
+Through one of the trees, you see a terrifying monster",
+      },
+      {
+        "id": 102,
+        "name": "Your car",
+        "short_description": "It appears to have the windows smashed",
+        "long_description": "It appears to have the windows smashed
+Upon closer inspection, you spot blood stains on the window",
+        "entrance": [
+          {
+            "id": 101,
+            "dir": "N"
+          },
+          {
+            "id": 103,
+            "dir": "W"
+          }
+        ]
+      },
+      {
+        "id": 103,
+        "name": "A bush",
+        "short_description": "Something appears to have disturbed it recently",
+        "long_description": "The bush appears to have all of its berries picked
+Something has definitely been here recently",
+        "entrance": [
+          {
+            "id": 102,
+			      "dir": "E"
+          },
+          {
+            "id": 104,
+            "dir": "W"
+          }
+        ]
+      },
+      {
+        "id": 104,
+        "name": "A bear trap",
+        "short_description": "It has managed to cut off half of your leg",
+        "long_description": "The bear trap is so sharp that it cleanly cut off your leg",
+        "entrance": [
+          {
+            "id": 103,
+			      "dir": "E"
+          },
+          {
+            "id": 105
+            "dir": "W"
+          }
+        ],
+        "loot": [
+          {
+            "id": 1
+          }
+        ]
+      },
+      {
+        "id": 105,
+        "name": "A hunter's cottage",
+        "short_description": "On the table, you manage to find an ancient axe",
+        "long_description": "Someone has clearly entered this cottage recently
+Upon closer inspection, it looks like something has exited through a window",
+        "entrance": [
+          {
+            "id": 104
+            "dir": "E"
+          },
+          {
+            "id": 106
+            "dir": "N"
+          },
+          {
+            "id": 1051
+            "dir": "up"
+          },
+          {
+            "id": 1052
+            "dir": "down"
+          }
+        ],
+        "loot": [
+          {
+            "id": 2
+          }
+        ]
+      },
+      {
+        "id": 106,
+        "name": "The deep forest",
+        "short_description": "This place is surrounded by rocks",
+        "long_description": "This place is surrounded by jagged rocks
+It looks like there is a small crack in one of them",
+        "entrance": [
+          {
+            "id": 105
+            "dir": "S"
+          },
+          {
+            "id": 107
+            "dir": "E"
+          }
+        ],
+        "loot": [
+          {
+            "id": 3
+          }
+        ]
+      },
+      {
+        "id": 107,
+        "name": "The monster's lair",
+        "short_description": "A monster lives here, which you manage to kill",
+        "long_description": "Upstairs, you hear a monster snoring
+You kill the monster in its sleep",
+        "entrance": [
+          {
+            "id": 106
+            "dir": "W"
+          }
+        ],
+        "loot": [
+          {
+            "id": 4
+          }
+        ]
+      },
+      {
+        "id": 1051,
+        "name": "The cottage attic",
+        "short_description": "The floor is very dusty",
+        "long_description": "It must have been ages since somebody last cleaned this attic",
+        "entrance": [
+          {
+            "id": 105
+            "dir": "up"
+          }
+        ]
+      },
+      {
+        "id": 1052,
+        "name": "The cottage basement",
+        "short_description": "There is rubble everywhere!",
+        "long_description": "There is rubble everywhere!
+You should leave seen while you still remember how to get out.",
+        "entrance": [
+          {
+            "id": 105
+            "dir": "up"
+          }
+        ]
+      }
+    ],
+    "item": [
+      {
+        "id": 1,
+        "name": "Stumped Leg",
+        "desc": "The remains of your leg from a bear trap",
+        "edible": true
+      },
+      {
+        "id": 2,
+        "name": "Axe",
+        "desc": "An axe which you found in a cottage",
+        "wearable": true
+      },
+      {
+        "id": 3,
+        "name": "Scales",
+        "desc": "The monster's slippery scales",
+        "edible": true,
+        "tossable": true
+      },
+      {
+        "id": 4,
+        "name": "Car Keys",
+        "desc": "Generally useful for driving a car",
+        "readable": true
+      }
+    ]
+  }
+}
