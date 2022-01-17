@@ -1,5 +1,7 @@
 ##Note
-This program was an individual assignment completed in CIS*2430 in the Summer 2020 semester. The source code was last updated in June 2020
+This program was an individual assignment completed in CIS*2430 in the Summer 2020 semester. 
+This commit is the original source code when handing in the assignment, without any modifications. 
+As such, the source code was last updated in June 2020.
 
 ## Author Information
 
