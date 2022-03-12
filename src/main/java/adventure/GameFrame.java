@@ -30,14 +30,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 //Game imports
-
 import java.io.InputStreamReader;
 
 /**
  *
  * @author Dylan Munro
  */
-public class GameFrame implements ActionListener{
+public class GameFrame implements ActionListener {
 
     private Adventure myAdventure;
 
@@ -47,7 +46,6 @@ public class GameFrame implements ActionListener{
     private static final int BORDERLAYOUT_SPACING_X = 10;
     private static final int BORDERLAYOUT_SPACING_Y = 5;
     private static final Dimension MAJOR_TEXT_AREA_SIZE = new Dimension(450, 500);
-
 
     //Swing instance vars
     private final JFrame frame = new JFrame("Colossal Caves Adventure");
@@ -78,8 +76,8 @@ public class GameFrame implements ActionListener{
     private final JTextArea inventoryText = new JTextArea();
 
     public static void main(String[] args) {
-      GameFrame frame = new GameFrame();
-      frame.run();
+        GameFrame frame = new GameFrame();
+        frame.run();
     }
 
     /**
@@ -98,11 +96,11 @@ public class GameFrame implements ActionListener{
         frame.setVisible(true);
     }
 
-    //-------------------------North Region Initializers---------------
-
+    //-------------------------South Region Initializers---------------
     /**
-     * Creates all swing components in the north region of the Container's BorderLayout
-     * The north region contains all information relevant to the player's name
+     * Creates all swing components in the north region of the Container's
+     * BorderLayout The north region contains all information relevant to the
+     * player's name
      */
     public void makeSouthRegion() {
         JPanel panel = new JPanel();
@@ -116,7 +114,9 @@ public class GameFrame implements ActionListener{
     }
 
     /**
-     * Initializes the JPanel containing the player's current name and a description
+     * Initializes the JPanel containing the player's current name and a
+     * description
+     *
      * @return The JPanel containing the player's name and a description
      */
     private JPanel initializePlayerNamePanel() {
@@ -131,6 +131,7 @@ public class GameFrame implements ActionListener{
 
     /**
      * Initializes the JPanel allowing the player to change their current name
+     *
      * @return The JPanel allowing the player to change their current name
      */
     private JPanel initializeChangePlayerNamePanel() {
@@ -145,11 +146,11 @@ public class GameFrame implements ActionListener{
         return panel;
     }
 
-    //--------------------------East Region Initializers------------------
-
+    //---------------------------------------------East Region Initializers----------------------------------------
     /**
-     * Creates all swing components in the east region of the Container's BorderLayout
-     * The east region contains all information relevant to the user's commands
+     * Creates all swing components in the east region of the Container's
+     * BorderLayout The east region contains all information relevant to the
+     * user's commands
      */
     public void makeEastRegion() {
         JPanel commandPanel = new JPanel(new BorderLayout(BORDERLAYOUT_SPACING_X, BORDERLAYOUT_SPACING_Y));
@@ -161,8 +162,9 @@ public class GameFrame implements ActionListener{
     }
 
     /**
-     * Initializes the JPanel in the north region of the commands section
-     * This JPanel Contains the player's current room
+     * Initializes the JPanel in the north region of the commands section This
+     * JPanel Contains the player's current room
+     *
      * @return The JPanel containing details about the player's current room
      */
     private JPanel initializeNorthCommandPanel() {
@@ -175,10 +177,10 @@ public class GameFrame implements ActionListener{
         return panel;
     }
 
-
     /**
-     * Initializes the JPanel in the center region of the commands section
-     * This JPanel Contains the player's command history
+     * Initializes the JPanel in the center region of the commands section This
+     * JPanel Contains the player's command history
+     *
      * @return The JPanel containing details about the player's command history
      */
     private JPanel initializeCenterCommandPanel() {
@@ -192,10 +194,10 @@ public class GameFrame implements ActionListener{
         return panel;
     }
 
-
     /**
-     * Initializes the JPanel in the south region of the commands section
-     * This JPanel Contains prompts for the user's next command
+     * Initializes the JPanel in the south region of the commands section This
+     * JPanel Contains prompts for the user's next command
+     *
      * @return The JPanel containing prompts for the user's next command
      */
     private JPanel initializeSouthCommandPanel() {
@@ -207,52 +209,42 @@ public class GameFrame implements ActionListener{
         panel.add(enterCommandBtn, BorderLayout.SOUTH);
         return panel;
     }
+    //------------------------------End of East region initializers-----------------------------
 
+    //------------------------------North region initializers-----------------------------------
+    
     /**
-    * Creates all swing components in the south region of the Container's BorderLayout
-    * The south region contains all information relevant to the game's settings
-    */
+     * Creates all swing components in the south region of the Container's
+     * BorderLayout The south region contains all information relevant to the
+     * game's settings
+     */
     public void makeNorthRegion() {
-        initializeNorththMenu();
-        contentPane.add(menuBar, BorderLayout.NORTH);
-    }
-
-    /**
-    * Initializes the buttons in the south region of the contentPane
-    */
-    private void initializeNorththMenu() {
-      addSouthMenuItemsToGroup();
-      initializeSouthMenuItemListeners();
-    }
-
-    /**
-    * Adds action listeners to all buttons in south region
-    */
-    private void initializeSouthMenuItemListeners() {
-        quitGameMenuItem.addActionListener(e ->
-          frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
-        saveGameMenuItem.addActionListener(e -> fileChooser.showOpenDialog(null));
-        loadNewJSONFileMenuItem.addActionListener(e -> loadNewAdventure());
-        loadDefaultJSONFileMenuItem.addActionListener(e -> loadDefaultAdventure());
-        loadSavedJSONFileMenuItem.addActionListener(e -> fileChooser.showOpenDialog(null));
-    }
-
-    /**
-    * Adds all radio buttons in the south region to a group
-    */
-    private void addSouthMenuItemsToGroup() {
+        
+        //Initialize Menu Bar
         fileMenu.add(quitGameMenuItem);
         fileMenu.add(saveGameMenuItem);
         fileMenu.add(loadNewJSONFileMenuItem);
         fileMenu.add(loadDefaultJSONFileMenuItem);
         fileMenu.add(loadSavedJSONFileMenuItem);
         menuBar.add(fileMenu);
+        
+        //Add action listeners to menu bar
+        quitGameMenuItem.addActionListener(e
+                -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
+        saveGameMenuItem.addActionListener(e -> fileChooser.showOpenDialog(null));
+        loadNewJSONFileMenuItem.addActionListener(e -> loadNewAdventure());
+        loadDefaultJSONFileMenuItem.addActionListener(e -> loadDefaultAdventure());
+        loadSavedJSONFileMenuItem.addActionListener(e -> fileChooser.showOpenDialog(null));
+        
+        contentPane.add(menuBar, BorderLayout.NORTH);
     }
 
     /**
-    * Creates a JPanel containing all JRadioButtons in the south region of the frame
-    * @return A JPanel containing all Radio Buttons in the south region
-    */
+     * Creates a JPanel containing all JRadioButtons in the south region of the
+     * frame
+     *
+     * @return A JPanel containing all Radio Buttons in the south region
+     */
     public JPanel getRadioButtonPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -263,10 +255,12 @@ public class GameFrame implements ActionListener{
         panel.add(loadSavedJSONFileMenuItem);
         return panel;
     }
+
     /**
-    * Creates all swing components in the west region of the Container's BorderLayout
-    * The west region contains all information relevant to the player's inventory
-    */
+     * Creates all swing components in the west region of the Container's
+     * BorderLayout The west region contains all information relevant to the
+     * player's inventory
+     */
     public void makeWestRegion() {
         JPanel panel = new JPanel(new BorderLayout(BORDERLAYOUT_SPACING_X, BORDERLAYOUT_SPACING_Y));
         JScrollPane inventoryScrollPane = new JScrollPane(inventoryText);
@@ -281,6 +275,7 @@ public class GameFrame implements ActionListener{
 
     /**
      * Returns a centered, titled border
+     *
      * @param title The title of the border
      * @return A centered, titled border with the title param as its name
      */
@@ -293,177 +288,156 @@ public class GameFrame implements ActionListener{
     //---------------------------Event Handling--------------------------
     /**
      * Handles all actions performed on objects
+     *
      * @param e The current event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == changePlayerNameBtn) {
-          changePlayerNameFields();
-          changePlayerNameText.setText("");
+        if (e.getSource() == changePlayerNameBtn && myAdventure == null) {
+            displayErrorMessage("Please load an adventure before changing your name");
+        } else if (e.getSource() == changePlayerNameBtn) {
+            playerNameText.setText(changePlayerNameText.getText());
+            myAdventure.getCurrentPlayer().setName(changePlayerNameText.getText());
+            changePlayerNameText.setText("");
         } else if (e.getSource() == enterCommandBtn) {
-          processCommand(enterCommandText.getText());
-          enterCommandText.setText("");
+            processCommand(enterCommandText.getText());
+            enterCommandText.setText("");
+        }
+    }
+    
+    /**
+     * Creates a Command from a String
+     *
+     * @param userInput The string representation of the command
+     */
+    private void processCommand(String userInput) {
+        Parser commandParser = new Parser();
+        Command currentCommandObject;
+        try {
+            currentCommandObject = commandParser.parseUserCommand(userInput);
+            setTextFields(currentCommandObject);
+            if (currentCommandObject.getActionWord().compareTo("quit") == 0 && myAdventure != null) {
+                frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //Closes the frame
+            }
+        } catch (Exception e) {
+            displayErrorMessage(e.getMessage());
         }
     }
 
     /**
-    * Changes all Strings in the game containing the player's name
-    */
-    private void changePlayerNameFields() {
-      if (myAdventure == null) {
-        displayErrorMessage("Please Load an adventure before changing your name");
-        return;
-      }
-      playerNameText.setText(changePlayerNameText.getText());
-      myAdventure.getCurrentPlayer().setName(changePlayerNameText.getText());
+     * Sets various text fields according to a commands output
+     *
+     * @param currentCommandObject The command being executed
+     */
+    private void setTextFields(Command currentCommandObject) throws ItemNotFoundException, InvalidCommandException {
+        Player currentPlayer = myAdventure.getCurrentPlayer();
+        commandHistoryText.setText(myAdventure.executeCommand(currentCommandObject));
+        inventoryText.setText(currentPlayer.getInventoryString());
+        playerNameText.setText(currentPlayer.getName());
+        currentRoomText.setText(myAdventure.getCurrentRoom().getName());
     }
 
     /**
-    * Creates a Command from a String
-    * @param userInput The string representation of the command
-    */
-    private void processCommand(String userInput) {
-      Parser commandParser = new Parser();
-      Command currentCommandObject;
-      try {
-        currentCommandObject = commandParser.parseUserCommand(userInput);
-        setTextFields(currentCommandObject);
-        checkForQuitCommand(currentCommandObject);
-      } catch (Exception e) {
-        displayErrorMessage(e.getMessage());
-      }
+     * Sets various text fields based on details about the adventures state
+     */
+    private void initializeTextFields() {
+        Player currentPlayer = myAdventure.getCurrentPlayer();
+        commandHistoryText.setText(myAdventure.getCurrentRoom().toString());
+        inventoryText.setText(currentPlayer.getInventoryString());
+        playerNameText.setText(currentPlayer.getName());
+        currentRoomText.setText(myAdventure.getCurrentRoom().getName());
     }
 
     /**
-    * Checks for the command to quit the GUI
-    * @param currentCommandObject The command being checked
-    */
-    private void checkForQuitCommand(Command currentCommandObject) {
-      if (currentCommandObject.getActionWord().compareTo("quit") == 0 && myAdventure != null) {
-        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); //Closes the frame
-      }
-    }
-
-    /**
-    * Sets various text fields according to a commands output
-    * @param currentCommandObject The command being executed
-    */
-    private void setTextFields(Command currentCommandObject) throws ItemNotFoundException, InvalidCommandException{
-      Player currentPlayer = myAdventure.getCurrentPlayer();
-      commandHistoryText.setText(myAdventure.executeCommand(currentCommandObject));
-      inventoryText.setText(currentPlayer.getInventoryString());
-      playerNameText.setText(currentPlayer.getName());
-      currentRoomText.setText(myAdventure.getCurrentRoom().getName());
-    }
-
-    /**
-    * Sets various text fields based on details about the adventures state
-    */
-    private void setTextFields() {
-      Player currentPlayer = myAdventure.getCurrentPlayer();
-      commandHistoryText.setText(myAdventure.getCurrentRoom().toString());
-      inventoryText.setText(currentPlayer.getInventoryString());
-      playerNameText.setText(currentPlayer.getName());
-      currentRoomText.setText(myAdventure.getCurrentRoom().getName());
-    }
-
-    /**
-    * Loads a new JSON file to become the current adventure
-    */
-    private void loadJSONFile() {
-      if (loadNewJSONFileMenuItem.isSelected()) {
-        loadNewAdventure();
-      } else if (loadDefaultJSONFileMenuItem.isSelected()) {
-        loadDefaultAdventure();
-      } else if (loadSavedJSONFileMenuItem.isSelected()) {
-        fileChooser.showOpenDialog(null);
-      }
-    }
-
-    /**
-    * Loads the default Adventure
-    */
+     * Loads the default Adventure
+     */
     private void loadDefaultAdventure() {
-      JSONObject obj;
-      try {
-        obj = loadAdventureJson();
-        myAdventure = new Adventure(obj);
-        myAdventure.isValidAdventure();
-        setTextFields();
-        commandHistoryText.setText("You have loaded the default adventure file, haunted_forest.json");
-      } catch (InvalidJSONFileException e) {
-        displayErrorMessage(e.getMessage());
-      }
+        JSONObject obj;
+        try {
+            obj = loadAdventureJson();
+            myAdventure = new Adventure(obj);
+            myAdventure.isValidAdventure();
+            initializeTextFields();
+            commandHistoryText.setText("You have loaded the default adventure file, haunted_forest.json");
+        } catch (InvalidJSONFileException e) {
+            displayErrorMessage(e.getMessage());
+        }
     }
 
     /**
-    * Loads a new adventure
-    */
+     * Loads a new adventure
+     */
     private void loadNewAdventure() {
-      JSONObject adventureJson;
-      try {
-        fileChooser.showOpenDialog(null);
-        adventureJson = loadAdventureJson(fileChooser.getSelectedFile());
-        myAdventure = new Adventure(adventureJson);
-        setTextFields();
-        commandHistoryText.setText("You have loaded a new adventure file");
-      } catch (Exception e) {
-        displayErrorMessage(e.getMessage());
-      }
+        JSONObject adventureJson;
+        try {
+            fileChooser.showOpenDialog(null);
+            adventureJson = loadAdventureJson(fileChooser.getSelectedFile());
+            myAdventure = new Adventure(adventureJson);
+            initializeTextFields();
+            commandHistoryText.setText("You have loaded a new adventure file");
+        } catch (Exception e) {
+            displayErrorMessage(e.getMessage());
+        }
     }
 
     /**
-    * Creates a JSONObject with all information relevant to the adventure
-    * @return A JSON object containing all information relevant to the adventure
-    */
+     * Creates a JSONObject with all information relevant to the adventure
+     *
+     * @return A JSON object containing all information relevant to the
+     * adventure
+     */
     public JSONObject loadAdventureJson() {
-      InputStream fileStream = Game.class.getClassLoader().getResourceAsStream("haunted_forest.json");
-      return getJSONFromInputStream(fileStream);
-    }
-
-    /**
-    * Creates a JSONObject with all information relevant to the adventure
-    * @param file The file being loaded
-    * @return A JSON object containing all information relevant to the adventure
-    */
-    public JSONObject loadAdventureJson(File file) {
-      try {
-        InputStream fileStream = new FileInputStream(file);
+        InputStream fileStream = Game.class.getClassLoader().getResourceAsStream("haunted_forest.json");
         return getJSONFromInputStream(fileStream);
-      } catch (Exception e) {
-        displayErrorMessage(e.getMessage());
-      }
-      return null;
     }
 
     /**
-    * Obtains a JSON object from an inputStream
-    * @param fileStream The InputStream being read
-    * @return A JSONObject containing the file's contents
-    */
+     * Creates a JSONObject with all information relevant to the adventure
+     *
+     * @param file The file being loaded
+     * @return A JSON object containing all information relevant to the
+     * adventure
+     */
+    public JSONObject loadAdventureJson(File file) {
+        try {
+            InputStream fileStream = new FileInputStream(file);
+            return getJSONFromInputStream(fileStream);
+        } catch (Exception e) {
+            displayErrorMessage(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Obtains JSONObject containing the necessary information to load an
+     * adventure from an InputStream
+     *
+     * @param fileStream The InputStream being read
+     * @return A JSONObject containing the file's contents
+     */
     public JSONObject getJSONFromInputStream(InputStream fileStream) {
-      JSONObject adventureJson = null;
-      JSONParser parser = new JSONParser();
-      try {
-        InputStreamReader reader = new InputStreamReader(fileStream);
-        adventureJson = (JSONObject) parser.parse(reader);
-        adventureJson = (JSONObject) adventureJson.get("adventure");
-      } catch (Exception e) {
-        displayErrorMessage(e.getMessage());
-      }
-      return adventureJson;
+        JSONObject adventureJson = null;
+        JSONParser parser = new JSONParser();
+        try {
+            InputStreamReader reader = new InputStreamReader(fileStream);
+            adventureJson = (JSONObject) parser.parse(reader);
+            adventureJson = (JSONObject) adventureJson.get("adventure");
+        } catch (Exception e) {
+            displayErrorMessage(e.getMessage());
+        }
+        return adventureJson;
     }
 
     /**
      * @param message The message describing the error
      */
     public void displayErrorMessage(String message) {
-      if (myAdventure == null) {
-        JOptionPane.showMessageDialog(frame,
-        "Please load an adventure file before interacting with the game", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-      }
-      JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.ERROR_MESSAGE);
+        if (myAdventure == null) {
+            JOptionPane.showMessageDialog(frame,
+                    "Please load an adventure file before interacting with the game", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }
