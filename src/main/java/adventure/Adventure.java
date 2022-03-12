@@ -181,23 +181,20 @@ public class Adventure implements Serializable{
     }
 
     /**
-    * Returns a list of all items in the adventure game
-    * @return An ArrayList of all items in the adventure
+    * @return An ArrayList of all items loaded into the adventure
     */
     public ArrayList<Item> listAllItems() {
       return itemList;
     }
 
     /**
-    * Returns a player object containing the current player
-    * @return A player object containing the current player
+    * @return Player object describing details of the current player's progress
     */
     public Player getCurrentPlayer() {
       return currentPlayer;
     }
 
     /**
-    * Returns a room object containing the current room in the adventure
     * @return The current room in the adventure
     */
     public Room getCurrentRoom() {
@@ -205,7 +202,6 @@ public class Adventure implements Serializable{
     }
 
     /**
-    * Returns a short description of the current room in the adventure
     * @return A short description of the current room in the adventure
     */
     public String getCurrentRoomShortDescription() {
@@ -213,7 +209,6 @@ public class Adventure implements Serializable{
     }
 
     /**
-    * Returns a long description of the current room in the adventure
     * @return A long description of the current room in the adventure
     */
     public String getCurrentRoomDescription() {
@@ -221,7 +216,6 @@ public class Adventure implements Serializable{
     }
 
     /**
-    * Obtains the string format of the starting room
     * @return Starting room name, items contained, and a short description about the room
     */
     public String loadDefaultRoom() {
@@ -251,7 +245,7 @@ public class Adventure implements Serializable{
     /**
     * Executes commands related to the item subclasses
     * @param currentCommand The command being executed
-    * @return The output text for executing the command
+    * @return Description of the command's result
     */
     public String executeSpecificItemCommand(Command currentCommand)
     throws ItemNotFoundException, InvalidCommandException {
