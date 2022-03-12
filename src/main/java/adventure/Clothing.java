@@ -4,44 +4,28 @@ package adventure;
 import org.json.simple.JSONObject;
 
 /**
-* Creates a subclass of Item that can be worn and implements the Wearable interface
+* Creates a subclass of Item which can be worn
 */
 public class Clothing extends Item implements Wearable {
 
   private boolean wornStatus = false;
 
   /**
-  * Default Constructor
-  */
-  public Clothing() {
-    super(null);
-  }
-
-  /**
-  * One parameter constructor
-  * @param obj The JSONObject that the clothing is being made from
+  * Creates a Clothing Item from its JSONObject representation
+  * @param obj JSONObject representation of Clothing Item
   */
   public Clothing(JSONObject obj) {
     super(obj);
   }
 
   /**
-  * Returns text describing the player wearing the clothing
-  * @return A string containing details about wearing the clothing
+  * @return Message informing the user that they successfully equipped the clothing
   */
+  @Override
   public String wear() {
     return "You wear " + super.getName() + ". It fits quite well.\n";
   }
-
-  /**
-  * Returns the clothing's name and a short description
-  * @return The clothing's name and a short description
-  * @Override
-  */
-  public String toString() {
-    return super.toString();
-  }
-
+  
   /**
   * Changes an objects worn status
   * @param status The new status of the item (true if worn, false if not)
@@ -51,11 +35,9 @@ public class Clothing extends Item implements Wearable {
   }
 
   /**
-  * Returns the worn status of a clothing article
   * @return The status of the clothing article
   */
   public boolean getWornStatus() {
     return wornStatus;
   }
-
 }

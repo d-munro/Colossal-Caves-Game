@@ -104,9 +104,9 @@ public class Item{
     }
 
     /**
-    * Returns the item's name and a short description of it
     * @return The item's name and a short description of it
     */
+    @Override
     public String toString() {
       return "Item Name: " + name + "\nItem Description: " + description;
     }

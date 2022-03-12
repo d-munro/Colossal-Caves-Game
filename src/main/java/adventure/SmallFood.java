@@ -4,40 +4,23 @@ package adventure;
 import org.json.simple.JSONObject;
 
 /**
-* Creates a subclass of Food that can be tossed and implements the Tossable interface
+* Creates a subclass of Food which can be tossed
 */
 public class SmallFood extends Food implements Tossable {
 
   /**
-  * Default Constructor
-  */
-  public SmallFood() {
-    super(null);
-  }
-
-  /**
-  * One parameter constructor
-  * @param obj The JSONObject that the SmallFood is being made from
+  * Creates a small piece of food from its JSONObject representation
+  * @param obj JSONObject representation of small food object
   */
   public SmallFood(JSONObject obj) {
     super(obj);
   }
 
   /**
-  * Returns text describing the player tossing the SmallFood
-  * @return A string containing details about tossing the SmallFood
+  * @return Message informing users that they have tossed the food
   */
+  @Override
   public String toss() {
     return "You toss " + super.getName() + " onto the ground.\n";
   }
-
-  /**
-  * Returns the SmallFood's name and a short description
-  * @return The SmallFood's name and a short description
-  * @Override
-  */
-  public String toString() {
-    return super.toString();
-  }
-
 }

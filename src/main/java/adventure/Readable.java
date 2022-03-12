@@ -1,7 +1,7 @@
 package adventure;
 
 /**
-* Interface which creates the definitions for the ncessary functions to read items
+* Interface which creates the definitions for the necessary functions to read items
 * @author Dylan Munro
 * @version 1.0
 */

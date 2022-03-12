@@ -4,40 +4,23 @@ package adventure;
 import org.json.simple.JSONObject;
 
 /**
-* Creates a subclass of Item that can be eaten and implements the Edible interface
+* Creates a subclass of Item which can be eaten
 */
 public class Food extends Item implements Edible {
 
   /**
-  * Default Constructor
-  */
-  public Food() {
-    super(null);
-  }
-
-  /**
-  * One parameter constructor
-  * @param obj The JSONObject that the Food is being made from
+  * Creates a Food Item from its JSONObject representation
+  * @param obj JSONObject representation of the food item
   */
   public Food(JSONObject obj) {
     super(obj);
   }
 
   /**
-  * Returns text describing the player eating the Food
-  * @return A string containing details about eating the Food
+  * @return Message informing the user that they have successfully eaten the food
   */
+  @Override
   public String eat() {
     return "You eat " + super.getName() + ". Delicious!\n";
   }
-
-  /**
-  * Returns the Food's name and a short description
-  * @return The Food's name and a short description
-  * @Override
-  */
-  public String toString() {
-    return super.toString();
-  }
-
 }

@@ -4,40 +4,23 @@ package adventure;
 import org.json.simple.JSONObject;
 
 /**
-* Creates a subclass of Spell that can be read and implements the Readable interface
+* Creates a subclass of Item which can be read
 */
 public class Spell extends Item implements Readable {
 
   /**
-  * Default Constructor
-  */
-  public Spell() {
-    super(null);
-  }
-
-  /**
-  * One parameter constructor
-  * @param obj The JSONObject that the spell is being made from
+  * Creates a Spell from its JSONObject representation
+  * @param obj JSONObject representation of the spell
   */
   public Spell(JSONObject obj) {
     super(obj);
   }
 
   /**
-  * Returns text describing the player reading the spell
-  * @return A string containing details about reading the spell
+  * @return String informing users that they have read the spell
   */
+  @Override
   public String read() {
     return "You read the text to cast " + super.getName() + ".\n";
   }
-
-  /**
-  * Returns the Spell's name and a short description
-  * @return The Spell's name and a short description
-  * @Override
-  */
-  public String toString() {
-    return super.toString();
-  }
-
 }
