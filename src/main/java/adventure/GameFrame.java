@@ -155,19 +155,18 @@ public class GameFrame implements ActionListener {
     public void makeEastRegion() {
         JPanel commandPanel = new JPanel(new BorderLayout(BORDERLAYOUT_SPACING_X, BORDERLAYOUT_SPACING_Y));
         commandPanel.setBorder(getCenteredTitledBorder("Commands"));
-        commandPanel.add(initializeNorthCommandPanel(), BorderLayout.NORTH);
-        commandPanel.add(initializeCenterCommandPanel(), BorderLayout.CENTER);
-        commandPanel.add(initializeSouthCommandPanel(), BorderLayout.SOUTH);
+        commandPanel.add(initializeCurrentRoomPanel(), BorderLayout.NORTH);
+        commandPanel.add(initializeCommandHistoryPanel(), BorderLayout.CENTER);
+        commandPanel.add(initializeNextCommandPanel(), BorderLayout.SOUTH);
         contentPane.add(commandPanel, BorderLayout.EAST);
     }
 
     /**
-     * Initializes the JPanel in the north region of the commands section This
-     * JPanel Contains the player's current room
+     * Initializes JPanel informing users of the current room in the adventure
      *
      * @return The JPanel containing details about the player's current room
      */
-    private JPanel initializeNorthCommandPanel() {
+    private JPanel initializeCurrentRoomPanel() {
         JPanel panel = new JPanel(new BorderLayout(BORDERLAYOUT_SPACING_X, BORDERLAYOUT_SPACING_Y));
         JLabel currentRoomLabel = new JLabel("Current Room: ");
         currentRoomText.setEditable(false);
@@ -178,12 +177,11 @@ public class GameFrame implements ActionListener {
     }
 
     /**
-     * Initializes the JPanel in the center region of the commands section This
-     * JPanel Contains the player's command history
+     * Initializes JPanel describing all historical commands
      *
      * @return The JPanel containing details about the player's command history
      */
-    private JPanel initializeCenterCommandPanel() {
+    private JPanel initializeCommandHistoryPanel() {
         JPanel panel = new JPanel(new BorderLayout(BORDERLAYOUT_SPACING_X, BORDERLAYOUT_SPACING_Y));
         JScrollPane scrollPane = new JScrollPane(commandHistoryText);
         commandHistoryText.setPreferredSize(MAJOR_TEXT_AREA_SIZE);
@@ -195,12 +193,11 @@ public class GameFrame implements ActionListener {
     }
 
     /**
-     * Initializes the JPanel in the south region of the commands section This
-     * JPanel Contains prompts for the user's next command
-     *
-     * @return The JPanel containing prompts for the user's next command
+     * Initializes and returns JPanel prompting the user for their next command
+     * 
+     * @return The JPanel prompting the user for their next command
      */
-    private JPanel initializeSouthCommandPanel() {
+    private JPanel initializeNextCommandPanel() {
         JPanel panel = new JPanel(new BorderLayout(BORDERLAYOUT_SPACING_X, BORDERLAYOUT_SPACING_Y));
         JLabel commandPrompt = new JLabel("What do you want to do next? ");
         enterCommandBtn.addActionListener(this);
@@ -240,23 +237,6 @@ public class GameFrame implements ActionListener {
     }
 
     /**
-     * Creates a JPanel containing all JRadioButtons in the south region of the
-     * frame
-     *
-     * @return A JPanel containing all Radio Buttons in the south region
-     */
-    public JPanel getRadioButtonPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(quitGameMenuItem);
-        panel.add(saveGameMenuItem);
-        panel.add(loadNewJSONFileMenuItem);
-        panel.add(loadDefaultJSONFileMenuItem);
-        panel.add(loadSavedJSONFileMenuItem);
-        return panel;
-    }
-
-    /**
      * Creates all swing components in the west region of the Container's
      * BorderLayout The west region contains all information relevant to the
      * player's inventory
@@ -274,10 +254,8 @@ public class GameFrame implements ActionListener {
     }
 
     /**
-     * Returns a centered, titled border
-     *
      * @param title The title of the border
-     * @return A centered, titled border with the title param as its name
+     * @return A centered, titled border for the specified title
      */
     private TitledBorder getCenteredTitledBorder(String title) {
         TitledBorder border = BorderFactory.createTitledBorder(title);
