@@ -4,111 +4,75 @@ package adventure;
 import org.json.simple.JSONObject;
 
 /**
-* Contains necessary info for each item in the adventure
-* @author Dylan Munro
-* @version 2.0
-*/
-public class Item{
+ * Contains necessary information for each item in the adventure
+ *
+ * @author Dylan Munro
+ * @version 2.0
+ */
+public class Item {
 
-    //instance var declarations
-    private String name;
-    private String description;
-    private int id;
-    private Room containingRoom = null;
-
-    /**
-    * Default constructor
-    */
-    public Item() {
-        this.name = "";
-        this.description = "";
-        this.id = 0;
-        this.containingRoom = null;
-    }
+    private final String name;
+    private final String description;
+    private final int id;
+    private Room containingRoom = null; //Room where item is initially located
 
     /**
-    * Constructor
-    * @param obj The JSON object containing all relevant info about the item
-    */
+     * Creates an Item from its JSONObject representation
+     *
+     * @param obj JSONObject representation of the item
+     */
     public Item(JSONObject obj) {
-      this.name = obj.get("name").toString();
-      this.description = obj.get("desc").toString();
-      String temp = obj.get("id").toString();
-      this.id = Integer.parseInt(temp);
+        this.name = obj.get("name").toString();
+        this.description = obj.get("desc").toString();
+        String temp = obj.get("id").toString();
+        this.id = Integer.parseInt(temp);
     }
 
     /**
-    * Sets the room which contains the current item as loot
-    * @param room The room containing the item as loot
-    */
+     * Sets the room which contains the current item as loot
+     *
+     * @param room The room containing the item as loot
+     */
     public void setContainingRoom(Room room) {
-      this.containingRoom = room;
+        this.containingRoom = room;
     }
 
     /**
-    * Sets the name of the current item
-    * @param itemName The name of the item
-    */
-    public void setName(String itemName) {
-      this.name = itemName;
-    }
-    /* required public methods */
-
-    /**
-    * Sets the description of the current item
-    * @param itemDescription The description of the item
-    */
-    public void setDescription(String itemDescription) {
-      this.description = itemDescription;
-    }
-
-    /* required public methods */
-    /**
-    * Returns the name of the item
-    * @return The name of the item
-    */
+     * @return The name of the item
+     */
     public String getName() {
-      return name;
+        return name;
     }
 
     /**
-    * Returns a long description of the item
-    * @return A long description of the item
-    */
+     * @return A long description of the item
+     */
     public String getLongDescription() {
-      return description;
+        return description;
     }
 
     /**
-    * Returns the id of an item
-    * @return The id of the item
-    */
-    public int getId() {
-      return id;
-    }
-
-    /**
-    * @return The room where the item is located
-    */
-    public Room getContainingRoom() {
-      return containingRoom;
-    }
-
-    /**
-     * The id is a unique identifier used to reference the item
+     * The id of the item is a unique identifier used to reference it
      * 
-    * @param id The id associated with the item
-    */
-    public void setId(int id) {
-      this.id = id;
+     * @return The id of the item
+     */
+    public int getId() {
+        return id;
     }
 
     /**
-    * @return The item's name and a short description of it
-    */
+     * @return The room where the item is located
+     */
+    public Room getContainingRoom() {
+        return containingRoom;
+    }
+
+    /**
+     * @return The item's name and a short description of it
+     */
     @Override
     public String toString() {
-      return "Item Name: " + name + "\nItem Description: " + description;
+        return "Item Name: " + name + "\nItem Description: " + description;
     }
 
 }
