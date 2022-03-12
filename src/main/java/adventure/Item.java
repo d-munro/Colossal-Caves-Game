@@ -2,21 +2,19 @@ package adventure;
 
 //imports
 import org.json.simple.JSONObject;
-import java.io.Serializable;
 
 /**
 * Contains necessary info for each item in the adventure
 * @author Dylan Munro
 * @version 2.0
 */
-public class Item implements Serializable{
+public class Item{
 
     //instance var declarations
     private String name;
     private String description;
     private int id;
     private Room containingRoom = null;
-    private static final long serialVersionUID = 2L;
 
     /**
     * Default constructor
@@ -90,25 +88,24 @@ public class Item implements Serializable{
     }
 
     /**
-    * Returns a reference to the room containing the item
-    * @return The room containing the item
+    * @return The room where the item is located
     */
     public Room getContainingRoom() {
       return containingRoom;
     }
 
     /**
-    * Sets the id associated with the current item
-    * @param i The id associated with the current item
+     * The id is a unique identifier used to reference the item
+     * 
+    * @param id The id associated with the item
     */
-    public void setId(int i) {
-      this.id = i;
+    public void setId(int id) {
+      this.id = id;
     }
 
     /**
     * Returns the item's name and a short description of it
     * @return The item's name and a short description of it
-    * @Override
     */
     public String toString() {
       return "Item Name: " + name + "\nItem Description: " + description;

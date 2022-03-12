@@ -5,21 +5,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
-import java.io.Serializable;
 
 /**
 * Creates an adventure object which holds various information about the game
 * @author Dylan Munro
 * @version 2.0
 */
-public class Adventure implements Serializable{
+public class Adventure{
 
     //instance var declarations
     private ArrayList<Room> roomList = new ArrayList<Room>();
     private ArrayList<Item> itemList = new ArrayList<Item>();
     private Room currentRoom;
     private Player currentPlayer = new Player();
-    private static final long serialVersionUID = 2L;
 
     //Constants
     public static final HashMap<Integer, Item> ID_TO_ITEM_MAP = new HashMap<Integer, Item>();
@@ -27,24 +25,22 @@ public class Adventure implements Serializable{
     public static final HashMap<String, Item> STRING_TO_ITEM_MAP = new HashMap<String, Item>();
     public static final HashMap<String, Room> STRING_TO_ROOM_MAP = new HashMap<String, Room>();
     public static final HashMap<String, Boolean> VALID_DIRECTIONS_MAP = new HashMap<String, Boolean>();
-
-    /**
-    * Default Constructor
-    */
-    public Adventure() {
-      roomList = null;
-      itemList = null;
-      currentRoom = null;
+    
+    static {
+      VALID_DIRECTIONS_MAP.put("N", true);
+      VALID_DIRECTIONS_MAP.put("E", true);
+      VALID_DIRECTIONS_MAP.put("S", true);
+      VALID_DIRECTIONS_MAP.put("W", true);
+      VALID_DIRECTIONS_MAP.put("up", true);
+      VALID_DIRECTIONS_MAP.put("down", true);
     }
 
     /**
-    * Constructor
     * @param adventureJson The JSON object containing all relevant information about the adventure
     */
     public Adventure(JSONObject adventureJson) {
-      setValidDirectionsMap();
 
-      //load item settings - IMPORTANT: Must initialize before rooms to prevent NPE when initializing loot
+      //load item settings - IMPORTANT: Must initialize before rooms to prevent NullPointerException when initializing loot
       JSONArray jsonItems = (JSONArray) adventureJson.get("item");
       generateItems(jsonItems);
       initializeIDToItemMap();
@@ -58,8 +54,9 @@ public class Adventure implements Serializable{
     }
 
     /**
-    * Checks that the all entries in the adventure JSON file are valid
-    * @return True if all entires are valid, false otherwise
+    * @return true if the loaded adventure contains valid entries, false otherwise
+    * 
+    * @throws InvalidJSONFileException
     */
     public boolean isValidAdventure() throws InvalidJSONFileException {
       for (Room current : roomList) {
@@ -69,20 +66,6 @@ public class Adventure implements Serializable{
       }
       return true;
     }
-
-    /**
-    * Creates and returns a HashMap containing all valid directions for the game
-    */
-    private void setValidDirectionsMap() {
-      VALID_DIRECTIONS_MAP.put("N", true);
-      VALID_DIRECTIONS_MAP.put("E", true);
-      VALID_DIRECTIONS_MAP.put("S", true);
-      VALID_DIRECTIONS_MAP.put("W", true);
-      VALID_DIRECTIONS_MAP.put("up", true);
-      VALID_DIRECTIONS_MAP.put("down", true);
-    }
-
-    //Map initializers
 
     /**
     * Initializes the constant ID_TO_ITEM_MAP
@@ -176,14 +159,14 @@ public class Adventure implements Serializable{
     * Returns a list of all rooms in the adventure game
     * @return An ArrayList of all rooms in the adventure
     */
-    public ArrayList<Room> listAllRooms() {
+    public ArrayList<Room> getRoomList() {
       return roomList;
     }
 
     /**
     * @return An ArrayList of all items loaded into the adventure
     */
-    public ArrayList<Item> listAllItems() {
+    public ArrayList<Item> getItemList() {
       return itemList;
     }
 
@@ -230,35 +213,26 @@ public class Adventure implements Serializable{
     * @return The output text from executing the command
     */
     public String executeCommand(Command currentCommand) throws ItemNotFoundException, InvalidCommandException {
-      if (currentCommand.getActionWord().compareTo("go") == 0) { //go
-        return go(currentCommand.getNoun());
-      } else if (currentCommand.getActionWord().compareTo("look") == 0) { //look
-        return look(currentCommand.getNoun());
-      } else if (currentCommand.getActionWord().compareTo("take") == 0) {
-        return take(currentCommand.getNoun());
-      } else if (currentCommand.getActionWord().compareTo("inventory") == 0) {
-        return inventory();
-      }
-      return executeSpecificItemCommand(currentCommand);
-    }
-
-    /**
-    * Executes commands related to the item subclasses
-    * @param currentCommand The command being executed
-    * @return Description of the command's result
-    */
-    public String executeSpecificItemCommand(Command currentCommand)
-    throws ItemNotFoundException, InvalidCommandException {
-      if (currentCommand.getActionWord().compareTo("eat") == 0) {
-        return eat(currentCommand.getNoun());
-      } else if (currentCommand.getActionWord().compareTo("toss") == 0) {
-        return toss(currentCommand.getNoun());
-      } else if (currentCommand.getActionWord().compareTo("wear") == 0) {
-        return wear(currentCommand.getNoun());
-      } else if (currentCommand.getActionWord().compareTo("read") == 0) {
-        return read(currentCommand.getNoun());
-      }
-      throw new InvalidCommandException();
+        switch(currentCommand.getActionWord()) {
+            case "eat":
+                return eat(currentCommand.getNoun());
+            case "go":
+                return go(currentCommand.getNoun());
+            case "inventory":
+                return inventory();
+            case "look":
+                return look(currentCommand.getNoun());
+            case "read":
+                return read(currentCommand.getNoun());
+            case "take":
+                return take(currentCommand.getNoun());
+            case "toss":
+                return toss(currentCommand.getNoun());
+            case "wear":
+                return wear(currentCommand.getNoun());
+            default:
+                throw new InvalidCommandException();
+        }
     }
 
     /**
@@ -343,9 +317,8 @@ public class Adventure implements Serializable{
     * @return A string containing details about all items in the player's inventory
     */
     public String inventory() {
-      String returnedString = "";
       ArrayList<Item> inv = currentPlayer.getInventory();
-      if (inv.size() == 0) {
+      if (inv.isEmpty()) {
         return "Your inventory is empty.\n";
       }
       return currentPlayer.getInventoryString();
@@ -439,32 +412,6 @@ public class Adventure implements Serializable{
     }
 
     /**
-    * Returns the name of the class (Adventure)
-    * @return The name of the class (Adventure)
-    * @Override
-    */
-    public String toString() {
-      return "Adventure";
-    }
-
-    //Setters
-    /**
-    * Sets the roomList which contains all rooms in the adventure
-    * @param list The list of all rooms in the adventure
-    */
-    public void setRoomList(ArrayList<Room> list) {
-      this.roomList = list;
-    }
-
-    /**
-    * Sets the itemList which contains all items in the adventure
-    * @param list The list of all items in the adventure
-    */
-    public void setItemList(ArrayList<Item> list) {
-      this.itemList = list;
-    }
-
-    /**
     * Sets the current room in the adventure
     * @param room The current room in the adventure
     */
@@ -478,14 +425,6 @@ public class Adventure implements Serializable{
     */
     public void setCurrentPlayer(Player player) {
       this.currentPlayer = player;
-    }
-
-    /**
-    * Returns an ArrayList containing all rooms in the adventure
-    * @return All rooms in the adventure
-    */
-    public ArrayList<Room> getRoomList() {
-      return roomList;
     }
 
 }
