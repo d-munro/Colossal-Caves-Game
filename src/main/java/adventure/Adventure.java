@@ -14,8 +14,8 @@ import org.json.simple.JSONArray;
 public class Adventure{
 
     //instance var declarations
-    private ArrayList<Room> roomList = new ArrayList<Room>();
-    private ArrayList<Item> itemList = new ArrayList<Item>();
+    private final ArrayList<Room> roomList = new ArrayList<Room>();
+    private final ArrayList<Item> itemList = new ArrayList<Item>();
     private Room currentRoom;
     private Player currentPlayer = new Player();
 
@@ -209,8 +209,13 @@ public class Adventure{
 
     /**
     * Calls appropriate method to handle execution of a command
+    * 
     * @param currentCommand The current command to be executed
+    * 
     * @return The output text from executing the command
+    * 
+    * @throws ItemNotFoundException
+    * @throws InvalidCommandException
     */
     public String executeCommand(Command currentCommand) throws ItemNotFoundException, InvalidCommandException {
         switch(currentCommand.getActionWord()) {
@@ -237,8 +242,12 @@ public class Adventure{
 
     /**
     * Handles execution of the go command
+    * 
     * @param direction The direction to travel in
+    * 
     * @return The new room's name, short description, and items contained
+    * 
+    * @throws InvalidCommandException
     */
     public String go(String direction) throws InvalidCommandException {
       if (direction == null || VALID_DIRECTIONS_MAP.get(direction) == null) {
@@ -254,8 +263,13 @@ public class Adventure{
 
     /**
     * Handles execution of the look command
+    * 
     * @param object The object being looked at
+    * 
     * @return A long description of the object
+    * 
+    * @throws ItemNotFoundException
+    * @throws InvalidCommandException
     */
     public String look(String object) throws ItemNotFoundException, InvalidCommandException{
       if (object == null) {
@@ -297,8 +311,13 @@ public class Adventure{
 
     /**
     * Handles execution of the take command
+    * 
     * @param object The object being taken
+    * 
     * @return A message telling the player what item was taken and a description of the item
+    * 
+    * @throws InvalidCommandException
+    * @throws ItemNotFoundException
     */
     public String take(String object) throws ItemNotFoundException, InvalidCommandException {
       if (object == null) {
@@ -326,8 +345,13 @@ public class Adventure{
 
     /**
     * Handles execution of the eat command
+    * 
     * @param object The name of the item
+    * 
     * @return A string containing details about the item eaten
+    * 
+    * @throws InvalidCommandException
+    * @throws ItemNotFoundException
     */
     public String eat(String object) throws ItemNotFoundException, InvalidCommandException {
       Item eatenItem = STRING_TO_ITEM_MAP.get(object);
@@ -355,8 +379,13 @@ public class Adventure{
 
     /**
     * Handles execution of the toss command
+    * 
     * @param object The name of the item being tossed
+    * 
     * @return A string containing details about the item tossed
+    * 
+    * @throws InvalidCommandException
+    * @throws ItemNotFoundException
     */
     public String toss(String object) throws ItemNotFoundException, InvalidCommandException {
       Item tossedItem = STRING_TO_ITEM_MAP.get(object);
@@ -378,8 +407,13 @@ public class Adventure{
 
     /**
     * Handles execution of the wear command
+    * 
     * @param object The item being worn
+    * 
     * @return A string containing details about the item worn
+    * 
+    * @throws InvalidCommandException
+    * @throws ItemNotFoundException
     */
     public String wear(String object) throws ItemNotFoundException, InvalidCommandException {
       Item wornItem = STRING_TO_ITEM_MAP.get(object);
@@ -395,8 +429,13 @@ public class Adventure{
 
     /**
     * Handles execution of the read command
+    * 
     * @param object The item being read
+    * 
     * @return A string containing details about the item read
+    * 
+    * @throws InvalidCommandException
+    * @throws ItemNotFoundException
     */
     public String read(String object) throws ItemNotFoundException, InvalidCommandException {
       Item readItem = STRING_TO_ITEM_MAP.get(object);
