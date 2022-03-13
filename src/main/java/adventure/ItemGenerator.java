@@ -12,13 +12,6 @@ import org.json.simple.JSONObject;
 public class ItemGenerator {
 
     /**
-    * Default Constructor
-    */
-    public ItemGenerator() {
-
-    }
-
-    /**
     * Creates an item from a JSONObject based on the interfaces it will implement
     * @param obj The JSONObject in question
     * @return The name of the class the object will become
@@ -28,9 +21,9 @@ public class ItemGenerator {
         return getFood(obj);
       } else if (getClothing(obj) != null) {
         return getClothing(obj);
-      } else if (willImplementReadable(obj)) { //Spell
+      } else if (obj.get("readable") != null) { //Spell
         return new Spell(obj);
-      } else if (willImplementTossable(obj)) { //Weapon
+      } else if (obj.get("tossable") != null) { //Weapon
         return new Weapon(obj);
       }
       return new Item(obj);
@@ -42,8 +35,8 @@ public class ItemGenerator {
     * @return The reference to the food item if the JSON object will be food, null otherwise
     */
     private Item getFood(JSONObject obj) {
-      if (willImplementEdible(obj)) { //Food or SmallFood
-        if (willImplementTossable(obj)) { //SmallFood
+      if (obj.get("edible") != null) { //Food or SmallFood
+        if (obj.get("tossable") != null) { //SmallFood
           return new SmallFood(obj);
         }
         return new Food(obj);
@@ -57,60 +50,12 @@ public class ItemGenerator {
     * @return The reference to the clothing item if the JSON object will be clothing, null otherwise
     */
     private Item getClothing(JSONObject obj) {
-      if (willImplementWearable(obj)) { //Clothing or BrandedClothing
-        if (willImplementReadable(obj)) { //BrandedClothing
+      if (obj.get("wearable") != null) { //Clothing or BrandedClothing
+        if (obj.get("readable") != null) { //BrandedClothing
           return new BrandedClothing(obj);
         }
         return new Clothing(obj);
       }
       return null;
-    }
-
-    /**
-    * Determines if the item created from a JSONObject will implement the edible interface
-    * @param obj The JSONObject
-    * @return true if the JSONObject will implement the edible interface, false otherwise
-    */
-    private boolean willImplementEdible(JSONObject obj) {
-      if (obj.get("edible") == null) {
-        return false;
-      }
-      return true;
-    }
-
-    /**
-    * Determines if the item created from a JSONObject will implement the tossable interface
-    * @param obj The JSONObject
-    * @return true if the JSONObject will implement the tossable interface, false otherwise
-    */
-    private boolean willImplementTossable(JSONObject obj) {
-      if (obj.get("tossable") == null) {
-        return false;
-      }
-      return true;
-    }
-
-    /**
-    * Determines if the item created from a JSONObject will implement the readable interface
-    * @param obj The JSONObject
-    * @return true if the JSONObject will implement the readable interface, false otherwise
-    */
-    private boolean willImplementReadable(JSONObject obj) {
-      if (obj.get("readable") == null) {
-        return false;
-      }
-      return true;
-    }
-
-    /**
-    * Determines if the item created from a JSONObject will implement the wearable interface
-    * @param obj The JSONObject
-    * @return true if the JSONObject will implement the wearable interface, false otherwise
-    */
-    private boolean willImplementWearable(JSONObject obj) {
-      if (obj.get("wearable") == null) {
-        return false;
-      }
-      return true;
     }
 }

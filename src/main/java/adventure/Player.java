@@ -2,32 +2,23 @@ package adventure;
 
 //imports
 import java.util.ArrayList;
-import java.io.Serializable;
 
 /**
 * Creates a Player object which stores various information about the player's game state
 * @author Dylan Munro
 * @version 2.0
 */
-public class Player implements Serializable {
+public class Player {
 
   private String name;
   private String saveGameName;
   private Room currentRoom;
   private ArrayList<Item> inventory;
-  private static final long serialVersionUID = 2L;
 
-  /*Mandatory methods - DO NOT MODIFY SIGNATURES*/
-
-  //Constructors
-
-  /**
-  * Constructor for Player class
-  */
   public Player() {
-    this("");
+      this("");
   }
-
+  
   /**
   * Constructor for Player class
   * @param n The player's name
@@ -109,15 +100,13 @@ public class Player implements Serializable {
   }
 
   /**
-  * Accessor method for the current room of the player's adventure
-  * @return The player's current room
+  * @return The current room of the player's adventure
   */
   public Room getCurrentRoom() {
     return currentRoom;
   }
 
   /**
-  * Accessor method for the save file name of the player's adventure
   * @return The save file name
   */
   public String getSaveGameName() {
@@ -125,19 +114,16 @@ public class Player implements Serializable {
   }
 
   /**
-  * Returns the player's name, a short description of the current room,
-  * and all items contained in the current room
-  * @Override
   * @return The player's name, a short description of the current room,
   * and all items contained in the current room
   */
+  @Override
   public String toString() {
     return name + currentRoom.toString();
   }
   /*End of mandatory methods*/
 
   /**
-  * Adds an item to the player's inventory
   * @param newItem The item being added to the player's inventory
   */
   public void addToInventory(Item newItem) {
@@ -145,7 +131,6 @@ public class Player implements Serializable {
   }
 
   /**
-  * Removes an item from the player's inventory
   * @param item The item being removed from the player's inventory
   */
   public void removeFromInventory(Item item) {
@@ -154,7 +139,6 @@ public class Player implements Serializable {
   //setters
 
   /**
-  * Sets the current room of the player's adventure
   * @param room The current room of the player's adventure
   */
   public void setCurrentRoom(Room room) {
@@ -162,16 +146,14 @@ public class Player implements Serializable {
   }
 
   /**
-  * Sets the player's name
-  * @param n The player's name
+  * @param name The player's name
   */
-  public void setName(String n) {
-    this.name = n;
+  public void setName(String name) {
+    this.name = name;
   }
 
   /**
-  * Sets all items in the player's inventory
-  * @param inv All items in the player's inventory
+  * @param inv ArrayList containing all items in the players inventory
   */
   public void setInventory(ArrayList<Item> inv) {
     this.inventory = inv;
