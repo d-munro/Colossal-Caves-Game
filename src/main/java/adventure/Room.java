@@ -263,7 +263,7 @@ public class Room {
     /**
      * Returns the room adjacent to current room in a specified direction
      *
-     * @param direction The requested direction
+     * @param direction The direction being travelled in
      * 
      * @return The adjacent room, or null if there is no room in the specified
      * direction

@@ -44,7 +44,7 @@ public class Parser implements Serializable{
   * @return A string containing all possible commands
   */
   public String allCommands() {
-    Set<String> commandsSet = Command.VALID_COMMANDS_MAP.keySet();
+    Set<String> commandsSet = Command.VALID_COMMANDS.keySet();
     String returnedString = "";
     for (String current : commandsSet) {
       returnedString += current + "\n";
