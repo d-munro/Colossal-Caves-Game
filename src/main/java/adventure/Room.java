@@ -19,7 +19,7 @@ public class Room {
     private final String longDescription;
     private final int id;
     private final boolean isStartingRoom;
-    private final ArrayList<Item> loot = new ArrayList<Item>();
+    private final ArrayList<Item> items = new ArrayList<Item>();
     private final HashMap<String, Integer> adjacentRoomIds = new HashMap<String, Integer>();
 
     /**
@@ -46,18 +46,18 @@ public class Room {
      */
     private void initializeLoot(JSONObject obj) { //Initializes all items in room
         JSONArray lootJson = (JSONArray) obj.get("loot");
-        if (lootJson == null) { //room has no loot
+        if (lootJson == null) { //room has no items
             return;
         }
         JSONObject lootObject;
         for (int i = 0; i < lootJson.size(); i++) {
             lootObject = (JSONObject) lootJson.get(i);
-            String temp = lootObject.get("id").toString();
-            Item currentItem = Adventure.ID_TO_ITEM_MAP.get(Integer.parseInt(temp));
+            Item currentItem = Adventure.ID_TO_ITEM_MAP.get(
+                    Integer.parseInt(lootObject.get("id").toString()));
             if (currentItem != null) {
                 currentItem.setContainingRoom(this);
             }
-            loot.add(currentItem);
+            items.add(currentItem);
         }
     }
 
@@ -69,29 +69,30 @@ public class Room {
      */
     private void mapAdjacentRooms(JSONObject obj) {
         JSONArray entranceJson = (JSONArray) obj.get("entrance");
+        JSONObject jsonRoom;
+        String currentDirection;
         if (entranceJson != null) {
             for (int i = 0; i < entranceJson.size(); i++) {
-                addAdjacantRoom((JSONObject) entranceJson.get(i));
+                
+                //Add adjacent rooms
+                jsonRoom = (JSONObject) entranceJson.get(i);
+                currentDirection = jsonRoom.get("dir").toString();
+                if (isValidDirection(currentDirection)) {
+                    adjacentRoomIds.put(currentDirection, 
+                            Integer.parseInt(jsonRoom.get("id").toString()));
+                }
             }
-        }
-    }
-
-    private void addAdjacantRoom(JSONObject jsonRoom) {
-        String currentDirection = jsonRoom.get("dir").toString();
-        String temp = jsonRoom.get("id").toString(); //string for ID at entrance i
-        Integer currentId = Integer.parseInt(temp);
-        if (isValidDirection(currentDirection)) {
-            adjacentRoomIds.put(currentDirection, currentId); //replace 1 with currentID
         }
     }
 
     /**
      * Adds an item to room and checks that various room aspects are valid
      * Checks that the direction is valid, item ID is valid, the room exists in
-     * the dungeon, and that the room has an exit If room is invalid, throws
-     * InvalidJSONFileException
+     * the dungeon, and that the room has an exit
      *
      * @return True if the room is a valid room for the dungeon
+     * 
+     * @throws InvalidJSONFileException
      */
     public boolean isValidRoom() throws InvalidJSONFileException {
         isExitable();
@@ -105,8 +106,10 @@ public class Room {
      * Verifies that a room has at least 1 exit
      *
      * @return true if the room has at least 1 exit, false otherwise
+     * 
+     * @throws InvalidJSONFileException
      */
-    public boolean isExitable() throws InvalidJSONFileException {
+    private boolean isExitable() throws InvalidJSONFileException {
         if (adjacentRoomIds.isEmpty()) {
             throw new InvalidJSONFileException("Corrupt JSON File - " + name + " has no exits.\n");
         }
@@ -116,10 +119,11 @@ public class Room {
     /**
      * Verifies that a room has exit directions of N, E, S, W, up, or down
      *
-     * @return true if exit directions are valid, throws
-     * InvalidJSONFileException otherwise
+     * @return true if exit directions are valid
+     * 
+     * @throws InvalidJSONFileException
      */
-    public boolean hasValidExitDirections() throws InvalidJSONFileException {
+    private boolean hasValidExitDirections() throws InvalidJSONFileException {
         for (String currentDirection : adjacentRoomIds.keySet()) {
             checkRoomAccessibility(currentDirection);
         }
@@ -127,10 +131,11 @@ public class Room {
     }
 
     /**
-     * Checks if a room can be accessed from its opposite direction Throws
-     * InvalidJSONFileException if not accessible
+     * Checks if a room can be accessed from its opposite direction 
      *
      * @param currentDirection The direction being checked
+     * 
+     * @throws InvalidJSONFileException
      */
     private void checkRoomAccessibility(String currentDirection) throws InvalidJSONFileException {
         Room connectedRoom = Adventure.ID_TO_ROOM_MAP.get(adjacentRoomIds.get(currentDirection));
@@ -168,8 +173,8 @@ public class Room {
      * @return true if room contains valid items, throws
      * InvalidJSONFileException otherwise
      */
-    public boolean hasValidLoot() throws InvalidJSONFileException {
-        for (Item currentItem : loot) {
+    private boolean hasValidLoot() throws InvalidJSONFileException {
+        for (Item currentItem : items) {
             if (currentItem == null || Adventure.ID_TO_ITEM_MAP.get(currentItem.getId()) == null) { //Item DNE
                 throw new InvalidJSONFileException("Corrupt JSON File:\n"
                         + name + " contains items that do not exist in the adventure.\n");
@@ -184,7 +189,7 @@ public class Room {
      * @return true if room exits to valid rooms, throws
      * InvalidJSONFileException otherwise
      */
-    public boolean exitsToValidRoom() throws InvalidJSONFileException {
+    private boolean exitsToValidRoom() throws InvalidJSONFileException {
         for (String key : adjacentRoomIds.keySet()) {
             if (Adventure.ID_TO_ROOM_MAP.get(adjacentRoomIds.get(key)) == null) { //Room DNE
                 throw new InvalidJSONFileException("Corrupt JSON File:\n"
@@ -195,37 +200,20 @@ public class Room {
     }
 
     /**
-     * Creates a map of adjacent rooms in all directions relevant to the current
-     * room
-     *
-     * @param i The id of the room being added to the map
-     * @param direction The direction needed to travel to reach the adjacent
-     * room
-     */
-    public void mapAdjacentRooms(String direction, int i) {
-        if (isValidDirection(direction)) {
-            adjacentRoomIds.put(direction, i);
-        }
-    }
-
-    /**
      * Determines if a direction is valid
      *
      * @param direction The direction in question
      * @return True if the direction is valid, false if invalid
      */
     private boolean isValidDirection(String direction) {
-        if (direction == null || Adventure.VALID_DIRECTIONS_MAP.get(direction) == null) {
-            return false;
-        }
-        return true;
+        return (direction != null) || (Adventure.VALID_DIRECTIONS_MAP.get(direction) != null);
     }
 
     /**
-     * @return An item ArrayList containing all items in the room
+     * @return ArrayList containing all items in the room
      */
     public ArrayList<Item> getLoot() {
-        return loot;
+        return items;
     }
 
     /**
@@ -276,6 +264,7 @@ public class Room {
      * Returns the room adjacent to current room in a specified direction
      *
      * @param direction The requested direction
+     * 
      * @return The adjacent room, or null if there is no room in the specified
      * direction
      */
@@ -285,30 +274,15 @@ public class Room {
         }
         return null;
     }
-
-    /**
-     * @return String describing all items found in the room
-     */
-    private String getLootString() {
-        if (loot.isEmpty()) {
-            return "There are no items in this area.\n";
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append("You have found the following items in this area:\n");
-        for (int i = 0; i < loot.size(); i++) {
-            sb.append(loot.get(i)).append("\n");
-        }
-        return sb.toString();
-    }
     
     /**
      * Determines if an item is present in a room
      *
      * @param item The item in question
-     * @return true if the item is in the current room, false if not present
+     * @return true if the item is in the current room, false otherwise
      */
     public boolean containsItem(Item item) {
-        for (Item currentItem : loot) {
+        for (Item currentItem : items) {
             if (currentItem.getId() == item.getId()) {
                 return true;
             }
@@ -321,9 +295,9 @@ public class Room {
      * @return true if item was successfully removed, false otherwise
      */
     public boolean removeItem(Item item) {
-        for (Item currentItem : loot) {
+        for (Item currentItem : items) {
             if (item.getId() == currentItem.getId()) {
-                loot.remove(currentItem);
+                items.remove(currentItem);
                 return true;
             }
         }
@@ -336,18 +310,30 @@ public class Room {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        
+        //Append room details
         sb.append("You are now in: ").append(name).append("\n");
         sb.append(shortDescription).append("\n");
-        sb.append(getLootString());
+        
+        //Append Item Details
+        if (items.isEmpty()) {
+            sb.append("There are no items in this area.\n");
+        } else {
+            sb.append("You have found the following items in this area:\n");
+            for (int i = 0; i < items.size(); i++) {
+                sb.append(items.get(i)).append("\n");
+            }
+        }
+        
         return sb.toString();
     }
 
     /**
-     * Adds an item to the loot contained within the room
+     * Adds an item to the items contained within the room
      *
-     * @param item The item to be added to the room's loot table
+     * @param item The new item being added to the room
      */
     public void addLoot(Item item) {
-        loot.add(item);
+        items.add(item);
     }
 }

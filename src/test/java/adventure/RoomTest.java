@@ -38,7 +38,7 @@ public class RoomTest {
       ArrayList<Room> roomList = noExitAdventure.getRoomList();
       try {
         for (Room currentRoom : roomList) {
-          currentRoom.isExitable();
+          currentRoom.isValidRoom();
         }
       } catch (InvalidJSONFileException e) {
         assertTrue(e.getMessage().compareTo("Corrupt JSON File - The forest center has no exits.\n") == 0);
@@ -53,7 +53,7 @@ public class RoomTest {
       ArrayList<Room> roomList = mismatchedExitAdventure.getRoomList();
       try {
         for (Room currentRoom : roomList) {
-          currentRoom.hasValidExitDirections();
+          currentRoom.isValidRoom();
         }
       } catch (InvalidJSONFileException e) {
         assertTrue(e.getMessage().compareTo("Corrupt JSON File:\n"
@@ -69,7 +69,7 @@ public class RoomTest {
       ArrayList<Room> roomList = invalidItemsAdventure.getRoomList();
       try {
         for (Room currentRoom : roomList) {
-          currentRoom.hasValidLoot();
+          currentRoom.isValidRoom();
         }
       } catch (InvalidJSONFileException e) {
         assertTrue(e.getMessage().compareTo("Corrupt JSON File:\n"
@@ -85,7 +85,7 @@ public class RoomTest {
       ArrayList<Room> roomList = invalidRoomIdAdventure.getRoomList();
       try {
         for (Room currentRoom : roomList) {
-          currentRoom.exitsToValidRoom();
+          currentRoom.isValidRoom();
         }
       } catch (InvalidJSONFileException e) {
         assertTrue(e.getMessage().compareTo("Corrupt JSON File:\n"
