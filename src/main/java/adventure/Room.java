@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
 /**
- * Creates a Room object which contains various items
+ * Creates an interactive room which users can travel between
  *
  * @author Dylan Munro
  * @version 2.0
@@ -22,6 +22,8 @@ public class Room {
     private final ArrayList<Item> items = new ArrayList<Item>();
     private final HashMap<String, Integer> adjacentRoomIds = new HashMap<String, Integer>();
 
+    //--------------------------Constructor Methods--------------------------------------------
+    
     /**
      * Generates a Room from its JSONObject representation
      *
@@ -85,10 +87,10 @@ public class Room {
         }
     }
 
+    //------------------------------End of Constructor Methods------------------------------
+    
     /**
-     * Adds an item to room and checks that various room aspects are valid
-     * Checks that the direction is valid, item ID is valid, the room exists in
-     * the dungeon, and that the room has an exit
+     * Ensures that the room and all of its features are legitimate
      *
      * @return True if the room is a valid room for the dungeon
      * 
@@ -139,7 +141,7 @@ public class Room {
      */
     private void checkRoomAccessibility(String currentDirection) throws InvalidJSONFileException {
         Room connectedRoom = Adventure.ID_TO_ROOM_MAP.get(adjacentRoomIds.get(currentDirection));
-        String oppositeDirection = getOppositeDirectionMap().get(currentDirection);
+        String oppositeDirection = Adventure.OPPOSITE_DIRECTIONS.get(currentDirection);
         if (connectedRoom.adjacentRoomIds.isEmpty()) {
             throw new InvalidJSONFileException("Corrupt JSON File - " + name + " has no exits.\n");
         } else if (connectedRoom.getAdjacentRoomIds().get(oppositeDirection) == null) { //Invalid direction
@@ -152,26 +154,11 @@ public class Room {
     }
 
     /**
-     * Returns a map containing the opposite of a direction
-     *
-     * @return A map containing opposite directions
-     */
-    private HashMap<String, String> getOppositeDirectionMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("N", "S");
-        map.put("S", "N");
-        map.put("W", "E");
-        map.put("E", "W");
-        map.put("up", "down");
-        map.put("down", "up");
-        return map;
-    }
-
-    /**
      * Verifies that a room contains items which exist in the adventure
      *
-     * @return true if room contains valid items, throws
-     * InvalidJSONFileException otherwise
+     * @return true if room contains valid items
+     * 
+     * @throws InvalidJSONFileException
      */
     private boolean hasValidLoot() throws InvalidJSONFileException {
         for (Item currentItem : items) {
@@ -186,8 +173,9 @@ public class Room {
     /**
      * Verifies that a room exits to a room which exists in the adventure
      *
-     * @return true if room exits to valid rooms, throws
-     * InvalidJSONFileException otherwise
+     * @return true if room exits to valid rooms
+     * 
+     * @throws InvalidJSONFileException
      */
     private boolean exitsToValidRoom() throws InvalidJSONFileException {
         for (String key : adjacentRoomIds.keySet()) {
@@ -206,7 +194,7 @@ public class Room {
      * @return True if the direction is valid, false if invalid
      */
     private boolean isValidDirection(String direction) {
-        return (direction != null) || (Adventure.VALID_DIRECTIONS_MAP.get(direction) != null);
+        return (direction != null) || (Adventure.VALID_DIRECTIONS.get(direction) != null);
     }
 
     /**

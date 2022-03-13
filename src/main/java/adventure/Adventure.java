@@ -24,15 +24,24 @@ public class Adventure{
     public static final HashMap<Integer, Room> ID_TO_ROOM_MAP = new HashMap<Integer, Room>();
     public static final HashMap<String, Item> STRING_TO_ITEM_MAP = new HashMap<String, Item>();
     public static final HashMap<String, Room> STRING_TO_ROOM_MAP = new HashMap<String, Room>();
-    public static final HashMap<String, Boolean> VALID_DIRECTIONS_MAP = new HashMap<String, Boolean>();
+    
+    public static final HashMap<String, Boolean> VALID_DIRECTIONS = new HashMap<String, Boolean>();
+    public static final HashMap<String, String> OPPOSITE_DIRECTIONS = new HashMap<String, String>();
     
     static {
-      VALID_DIRECTIONS_MAP.put("N", true);
-      VALID_DIRECTIONS_MAP.put("E", true);
-      VALID_DIRECTIONS_MAP.put("S", true);
-      VALID_DIRECTIONS_MAP.put("W", true);
-      VALID_DIRECTIONS_MAP.put("up", true);
-      VALID_DIRECTIONS_MAP.put("down", true);
+      VALID_DIRECTIONS.put("N", true);
+      VALID_DIRECTIONS.put("E", true);
+      VALID_DIRECTIONS.put("S", true);
+      VALID_DIRECTIONS.put("W", true);
+      VALID_DIRECTIONS.put("up", true);
+      VALID_DIRECTIONS.put("down", true);
+      
+      OPPOSITE_DIRECTIONS.put("N", "S");
+      OPPOSITE_DIRECTIONS.put("E", "W");
+      OPPOSITE_DIRECTIONS.put("S", "N");
+      OPPOSITE_DIRECTIONS.put("W", "E");
+      OPPOSITE_DIRECTIONS.put("up", "down");
+      OPPOSITE_DIRECTIONS.put("down", "up");
     }
 
     /**
@@ -248,7 +257,7 @@ public class Adventure{
     * @throws InvalidCommandException
     */
     public String go(String direction) throws InvalidCommandException {
-      if (direction == null || VALID_DIRECTIONS_MAP.get(direction) == null) {
+      if (direction == null || VALID_DIRECTIONS.get(direction) == null) {
         throw new InvalidCommandException("Please enter a valid direction.\n");
       }
       if (currentRoom.getConnectedRoom(direction) == null) { //Room doesn't exist

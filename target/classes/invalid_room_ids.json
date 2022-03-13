@@ -6,8 +6,7 @@
         "start": "true",
         "name": "The forest center",
         "short_description": "The center of the forest has trees for miles",
-        "long_description": "The center of the forest has thousands of trees
-Through one of the trees, you see a terrifying monster",
+        "long_description": "The center of the forest has thousands of trees. Through one of the trees, you see a terrifying monster",
         "entrance": [
           {
             "id": 102,
@@ -19,8 +18,7 @@ Through one of the trees, you see a terrifying monster",
         "id": 102,
         "name": "Your car",
         "short_description": "It appears to have the windows smashed",
-        "long_description": "It appears to have the windows smashed
-Upon closer inspection, you spot blood stains on the window",
+        "long_description": "It appears to have the windows smashed. Upon closer inspection, you spot blood stains on the window",
         "entrance": [
           {
             "id": 101,
@@ -36,8 +34,7 @@ Upon closer inspection, you spot blood stains on the window",
         "id": 103,
         "name": "A bush",
         "short_description": "Something appears to have disturbed it recently",
-        "long_description": "The bush appears to have all of its berries picked
-Something has definitely been here recently",
+        "long_description": "The bush appears to have all of its berries picked. Something has definitely been here recently",
         "entrance": [
           {
             "id": 10200,
@@ -60,7 +57,7 @@ Something has definitely been here recently",
 			      "dir": "E"
           },
           {
-            "id": 105
+            "id": 105,
             "dir": "W"
           }
         ],
@@ -74,23 +71,22 @@ Something has definitely been here recently",
         "id": 105,
         "name": "A hunter's cottage",
         "short_description": "On the table, you manage to find an ancient axe",
-        "long_description": "Someone has clearly entered this cottage recently
-Upon closer inspection, it looks like something has exited through a window",
+        "long_description": "Someone has clearly entered this cottage recently. Upon closer inspection, it looks like something has exited through a window",
         "entrance": [
           {
-            "id": 104
+            "id": 104,
             "dir": "E"
           },
           {
-            "id": 106
+            "id": 106,
             "dir": "N"
           },
           {
-            "id": 1051
+            "id": 1051,
             "dir": "up"
           },
           {
-            "id": 1052
+            "id": 1052,
             "dir": "down"
           }
         ],
@@ -104,15 +100,14 @@ Upon closer inspection, it looks like something has exited through a window",
         "id": 106,
         "name": "The deep forest",
         "short_description": "This place is surrounded by rocks",
-        "long_description": "This place is surrounded by jagged rocks
-It looks like there is a small crack in one of them",
+        "long_description": "This place is surrounded by jagged rocks. It looks like there is a small crack in one of them",
         "entrance": [
           {
-            "id": 105
+            "id": 105,
             "dir": "S"
           },
           {
-            "id": 107
+            "id": 107,
             "dir": "E"
           }
         ],
@@ -126,11 +121,10 @@ It looks like there is a small crack in one of them",
         "id": 107,
         "name": "The monster's lair",
         "short_description": "A monster lives here, which you manage to kill",
-        "long_description": "Upstairs, you hear a monster snoring
-You kill the monster in its sleep",
+        "long_description": "Upstairs, you hear a monster snoring. You kill the monster in its sleep",
         "entrance": [
           {
-            "id": 106
+            "id": 106,
             "dir": "W"
           }
         ],
@@ -147,7 +141,7 @@ You kill the monster in its sleep",
         "long_description": "It must have been ages since somebody last cleaned this attic",
         "entrance": [
           {
-            "id": 105
+            "id": 105,
             "dir": "up"
           }
         ]
@@ -156,11 +150,10 @@ You kill the monster in its sleep",
         "id": 1052,
         "name": "The cottage basement",
         "short_description": "There is rubble everywhere!",
-        "long_description": "There is rubble everywhere!
-You should leave seen while you still remember how to get out.",
+        "long_description": "There is rubble everywhere! You should leave seen while you still remember how to get out.",
         "entrance": [
           {
-            "id": 105
+            "id": 105,
             "dir": "up"
           }
         ]
