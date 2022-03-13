@@ -153,8 +153,6 @@ public class Adventure{
       }
     }
 
-    //-----------------------------------output methods and getters--------------------------------
-
     /**
     * Returns a list of all rooms in the adventure game
     * @return An ArrayList of all rooms in the adventure
