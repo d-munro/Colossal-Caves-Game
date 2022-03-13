@@ -49,8 +49,10 @@ public class Room {
         if (lootJson == null) { //room has no loot
             return;
         }
+        JSONObject lootObject;
         for (int i = 0; i < lootJson.size(); i++) {
-            String temp = obj.get("id").toString();
+            lootObject = (JSONObject) lootJson.get(i);
+            String temp = lootObject.get("id").toString();
             Item currentItem = Adventure.ID_TO_ITEM_MAP.get(Integer.parseInt(temp));
             if (currentItem != null) {
                 currentItem.setContainingRoom(this);
@@ -92,15 +94,10 @@ public class Room {
      * @return True if the room is a valid room for the dungeon
      */
     public boolean isValidRoom() throws InvalidJSONFileException {
-        System.out.println("Read1");
         isExitable();
-        System.out.println("Read2");
         exitsToValidRoom();
-        System.out.println("Read3");
         hasValidExitDirections();
-        System.out.println("Read4");
         hasValidLoot();
-        System.out.println("Read5");
         return true;
     }
 
